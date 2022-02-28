@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  fairgreen-wordpress:
+    image: wordpress
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: fairgreen-db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: fairgreen
+    volumes:
+      - fairgreen-wordpress:/var/www/html
+      - ./fairgreen-qrops-plugin:/var/www/html/wp-content/plugins
+
+  fairgreen-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: fairgreen
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - fairgreen-db:/var/lib/mysql
+
+volumes:
+  fairgreen-wordpress:
+  fairgreen-db:
